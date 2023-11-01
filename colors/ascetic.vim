@@ -6,47 +6,79 @@
 " Last Updated: Sun 29 Oct 2023 04:13:21 PM EDT
 
 set background=dark
-
 hi clear
+
+if exists('syntax on')
+  syntax reset
+endif
+
 let g:colors_name = 'ascetic'
 
 let s:t_Co = has('gui_running') ? -1 : get(g:, 'ascetic_t_Co', get(g:, 't_Co', exists('&t_Co') ? +&t_Co : 0))
 
-if (has('termguicolors') && &termguicolors) || has('gui_running')
-  let g:terminal_ansi_colors = ['#212121', '#c0c0c0', '#c0c0c0', '#c0c0c0', '#c0c0c0', '#c0c0c0', '#c0c0c0', '#c0c0c0', '#1d1d1d', '#c0c0c0', '#c0c0c0', '#c0c0c0', '#c0c0c0', '#c0c0c0', '#c0c0c0', '#ffffff']
-endif
-if has('nvim')
-  let g:terminal_color_foreground = "#212121"
-  let g:terminal_color_background = "#c0c0c0"
-  let g:terminal_color_0 = "#212121"
-  let g:terminal_color_1 = "#c0c0c0"
-  let g:terminal_color_2 = "#c0c0c0"
-  let g:terminal_color_3 = "#c0c0c0"
-  let g:terminal_color_4 = "#c0c0c0"
-  let g:terminal_color_5 = "#c0c0c0"
-  let g:terminal_color_6 = "#c0c0c0"
-  let g:terminal_color_7 = "#c0c0c0"
-  let g:terminal_color_8 = "#1d1d1d"
-  let g:terminal_color_9 = "#c0c0c0"
-  let g:terminal_color_10 = "#c0c0c0"
-  let g:terminal_color_11 = "#c0c0c0"
-  let g:terminal_color_12 = "#c0c0c0"
-  let g:terminal_color_13 = "#c0c0c0"
-  let g:terminal_color_14 = "#c0c0c0"
-  let g:terminal_color_15 = "#ffffff"
+let s:blackest        = { "gui": "#D1D1D1", "cterm": "0" }
+let s:black           = { "gui": "#212121", "cterm": "0" }
+let s:darkest_gray    = { "gui": "#323232", "cterm": "236" }
+let s:darker_gray     = { "gui": "#414141", "cterm": "8"   }
+let s:dark_gray       = { "gui": "#666666", "cterm": "242" }
+let s:medium_gray     = { "gui": "#767676", "cterm": "243" }
+let s:light_gray      = { "gui": "#B2B2B2", "cterm": "249" }
+let s:white           = { "gui": "#C0C0C0", "cterm": "81" }
+let s:lighter_white   = { "gui": "#F1F1F1", "cterm": "15"  }
+let s:actual_white    = { "gui": "#FFFFFF", "cterm": "231" }
+
+let s:bg = s:black
+let s:fg = s:white
+
+" https://github.com/noahfrederick/vim-hemisu/
+function! s:h(group, style)
+  execute "highlight" a:group
+    \ "guifg="   (has_key(a:style, "fg")    ? a:style.fg.gui   : "NONE")
+    \ "guibg="   (has_key(a:style, "bg")    ? a:style.bg.gui   : "NONE")
+    \ "guisp="   (has_key(a:style, "sp")    ? a:style.sp.gui   : "NONE")
+    \ "gui="     (has_key(a:style, "gui")   ? a:style.gui      : "NONE")
+    \ "ctermfg=" (has_key(a:style, "fg")    ? a:style.fg.cterm : "NONE")
+    \ "ctermbg=" (has_key(a:style, "bg")    ? a:style.bg.cterm : "NONE")
+    \ "cterm="   (has_key(a:style, "cterm") ? a:style.cterm    : "NONE")
+endfunction
+
+"
+if get(g:, 'ascetic_transparent_bg', 1) && !has('gui_running')
+  call s:h("Normal", {"fg": s:fg})
+else
+  call s:h("Normal", {"fg": s:fg, "bg": s:bg})
 endif
 
-hi ColorColumn guifg=NONE ctermfg=NONE guibg=#323232 ctermbg=236 gui=NONE cterm=NONE
+call s:h("Comment", {"fg": s:dark_gray})
+call s:h("Cursor",  {"fg": s:bg, "bg": s:fg})
 
-hi CursorColumn guifg=NONE ctermfg=NONE guibg=#323232 ctermbg=236 gui=NONE cterm=NONE
-hi CursorLine guifg=NONE ctermfg=NONE guibg=#323232 ctermbg=236 gui=NONE cterm=NONE
-hi CursorLineNr guifg=#c0c0c0 ctermfg=81 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+hi! link Constant     Normal
+hi! link Character    Constant
+hi! link String       Constant
+hi! link Boolean      Constant
+hi! link Number       Constant
+hi! link Float        Constant
+hi! link Identifier   Constant
+hi! link Function     Constant
+hi! link Statement    Constant
+hi! link Conditional  Constant
+hi! link Operator     Constant
+hi! link Exception    Constant
+hi! link PreProc      Constant
+hi! link Type         Constant
+hi! link Special      Constant
+
+call s:h("ColorColumn", {"bg": s:darkest_gray})
+hi! link CursorColumn ColorColumn
+hi! link CursorLine   ColorColumn
+hi! link CursorLineNr ColorColumn
 
 hi Directory guifg=#c0c0c0 ctermfg=153 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+
 hi DiffAdd guifg=NONE ctermfg=NONE guibg=#c0c0c0 ctermbg=238 gui=NONE cterm=NONE
 hi DiffChange guifg=NONE ctermfg=NONE guibg=#c0c0c0 ctermbg=239 gui=NONE cterm=NONE
 hi DiffDelete guifg=#c0c0c0 ctermfg=203 guibg=#c0c0c0 ctermbg=237 gui=NONE cterm=NONE
-hi DiffText guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=reverse cterm=reverse
+call s:h("DiffText", {"gui": "reverse", "cterm": "reverse"})
 
 hi ErrorMsg guifg=#c0c0c0 ctermfg=203 guibg=NONE ctermbg=NONE gui=reverse cterm=reverse
 hi VertSplit guifg=#212121 ctermfg=235 guibg=#212121 ctermbg=235 gui=NONE cterm=NONE
@@ -57,15 +89,15 @@ hi IncSearch guifg=#212121 ctermfg=235 guibg=#ffffff ctermbg=15 gui=NONE cterm=N
 hi LineNr guifg=#666666 ctermfg=238 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi MatchParen guifg=#2980b9 ctermfg=21 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 hi NonText guifg=#444444 ctermfg=238 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Normal guifg=#c0c0c0 ctermfg=255 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
-hi PMenu guifg=#c0c0c0 ctermfg=253 guibg=#212121 ctermbg=236 gui=NONE cterm=NONE
-hi PMenuSel guifg=#c0c0c0 ctermfg=253 guibg=#414141 ctermbg=232 gui=NONE cterm=NONE
-hi PmenuSbar guifg=#c0c0c0 ctermfg=180 guibg=#c0c0c0 ctermbg=180 gui=NONE cterm=NONE
-hi PmenuThumb guifg=#c0c0c0 ctermfg=215 guibg=#c0c0c0 ctermbg=215 gui=NONE cterm=NONE
+call s:h("Pmenu",      {"fg": s:fg, "bg": s:bg})
+call s:h("PmenuSel",   {"fg": s:fg, "bg": s:darker_gray})
+call s:h("PmenuSbar",  {"fg": s:fg, "bg": s:bg})
+call s:h("PmenuThumb", {"fg": s:fg, "bg": s:bg})
+
+call s:h("Search", {"fg": s:actual_white, "gui": "underline,bold", "cterm": "underline,bold"})
 
 hi Question guifg=#c0c0c0 ctermfg=185 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Search guifg=#ffffff ctermfg=15 guibg=NONE ctermbg=NONE gui=underline,bold cterm=underline,bold
 hi SpecialKey guifg=#444444 ctermfg=238 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
 hi SpellBad guifg=#c0c0c0 ctermfg=203 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
@@ -86,23 +118,8 @@ hi VisualNOS guifg=NONE ctermfg=NONE guibg=#444444 ctermbg=0 gui=NONE cterm=NONE
 hi WarningMsg guifg=#c0c0c0 ctermfg=203 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 hi WildMenu guifg=#212121 ctermfg=235 guibg=#c0c0c0 ctermbg=185 gui=bold cterm=bold
 
-hi Comment guifg=#666666 ctermfg=242 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Constant guifg=#c0c0c0 ctermfg=215 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi String guifg=#c0c0c0 ctermfg=180 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Character guifg=#c0c0c0 ctermfg=215 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Boolean guifg=#c0c0c0 ctermfg=215 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Number guifg=#c0c0c0 ctermfg=215 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Float guifg=#c0c0c0 ctermfg=215 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Identifier guifg=#c0c0c0 ctermfg=153 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Function guifg=#c0c0c0 ctermfg=153 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Statement guifg=#c0c0c0 ctermfg=153 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Conditional guifg=#c0c0c0 ctermfg=185 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Operator guifg=#c0c0c0 ctermfg=203 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Exception guifg=#c0c0c0 ctermfg=203 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi PreProc guifg=#c0c0c0 ctermfg=185 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Type guifg=#c0c0c0 ctermfg=81 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Special guifg=#c0c0c0 ctermfg=81 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-hi Underlined guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=underline cterm=underline
+call s:h("Underlined", {"gui": "underline", "cterm": "underline"})
+
 hi Error guifg=#f43753 ctermfg=255 guibg=NONE ctermbg=203 gui=NONE cterm=NONE
 hi Todo guifg=#ffc24b ctermfg=203 guibg=NONE ctermbg=NONE gui=bold cterm=bold
 
@@ -193,4 +210,48 @@ hi FloatBorder guifg=#666666 ctermfg=242 guibg=NONE ctermbg=NONE gui=italic cter
 "   unlet s:t_Co
 "   finish
 " endif
+
+" Neovim terminal ANSI colors
+if (has('termguicolors') && &termguicolors) || has('gui_running')
+  let g:terminal_ansi_colors = [
+    \ s:bg,
+    \ s:fg,
+    \ s:fg,
+    \ s:fg,
+    \ s:fg,
+    \ s:fg,
+    \ s:fg,
+    \ s:fg,
+    \ s:blackest,
+    \ s:fg,
+    \ s:fg,
+    \ s:fg,
+    \ s:fg,
+    \ s:fg,
+    \ s:fg,
+    \ s:actual_white
+    \ ]
+endif
+
+if has('nvim')
+  let g:terminal_color_foreground = s:fg
+  let g:terminal_color_background = s:bg
+  let g:terminal_color_0 = s:bg
+  let g:terminal_color_1 = s:fg
+  let g:terminal_color_2 = s:fg
+  let g:terminal_color_3 = s:fg
+  let g:terminal_color_4 = s:fg
+  let g:terminal_color_5 = s:fg
+  let g:terminal_color_6 = s:fg
+  let g:terminal_color_7 = s:fg
+  let g:terminal_color_8 = s:blackest
+  let g:terminal_color_9 = s:fg
+  let g:terminal_color_10 = s:fg
+  let g:terminal_color_11 = s:fg
+  let g:terminal_color_12 = s:fg
+  let g:terminal_color_13 = s:fg
+  let g:terminal_color_14 = s:fg
+  let g:terminal_color_15 = s:actual_white
+endif
+
 " vim: et ts=8 sw=2 sts=2
