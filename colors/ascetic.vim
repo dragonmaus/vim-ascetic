@@ -38,10 +38,10 @@ if s:ascetic_accent_colors
   let s:accent_green  = { "gui": "#A6DA95", "cterm": "82" }
   let s:accent_orange = { "gui": "#EED49F", "cterm": "136" }
 else
-  let s:accent_blue   = s:fg
-  let s:accent_red    = s:fg
-  let s:accent_green  = s:fg
-  let s:accent_orange = s:fg
+  let s:accent_blue   = s:actual_white
+  let s:accent_red    = s:dark_gray
+  let s:accent_green  = s:lighter_white
+  let s:accent_orange = s:light_gray
 endif
 
 " https://github.com/noahfrederick/vim-hemisu/
@@ -98,7 +98,7 @@ hi! link FoldColumn Folded
 call s:h("SignColumn", {"fg": s:medium_gray, "bg": s:black})
 
 call s:h("LineNr",     {"fg": s:dark_gray})
-call s:h("MatchParen", {"fg": s:accent_blue})
+call s:h("MatchParen", {"fg": s:accent_blue, "gui": "bold,underline", "cterm": "bold,underline"})
 call s:h("NonText",    {"fg": s:darker_gray})
 
 call s:h("Pmenu",      {"fg": s:fg, "bg": s:bg})
