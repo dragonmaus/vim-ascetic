@@ -92,13 +92,13 @@ call s:h("WarningMsg", {"fg": s:fg})
 call s:h("ErrorMsg",   {"fg": s:fg, "gui": "reverse", "cterm": "reverse"})
 call s:h("VertSplit",  {"fg": s:black, "bg": s:black})
 
-call s:h("Folded",  {"fg": s:medium_gray, "gui": "italic", "cterm": "italic"})
+call s:h("Folded",  {"fg": s:medium_gray})
 hi! link FoldColumn Folded
 
 call s:h("SignColumn", {"fg": s:medium_gray, "bg": s:black})
 
 call s:h("LineNr",     {"fg": s:dark_gray})
-call s:h("MatchParen", {"fg": s:accent_blue, "gui": "bold,underline", "cterm": "bold,underline"})
+call s:h("MatchParen", {"fg": s:accent_blue, "gui": "underline", "cterm": "underline"})
 call s:h("NonText",    {"fg": s:darker_gray})
 
 call s:h("Pmenu",      {"fg": s:fg, "bg": s:bg})
@@ -133,7 +133,7 @@ call s:h("Underlined", {"gui": "underline", "cterm": "underline"})
 call s:h("IncSearch",  {"fg": s:black, "bg": s:actual_white})
 
 call s:h("Error", {"fg": s:accent_red})
-call s:h("Todo",  {"fg": s:medium_gray, "gui": "bold,italic", "cterm": "bold,italic"})
+call s:h("Todo",  {"fg": s:dark_gray, "gui": "bold,italic", "cterm": "bold,italic"})
 
 " Floating windows
 call s:h("NormalFloat", {"fg": s:fg, "bg": s:bg})
