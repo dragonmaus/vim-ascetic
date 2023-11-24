@@ -31,12 +31,12 @@ let s:actual_white  = { "gui": "#FFFFFF", "cterm": "231" }
 let s:bg = s:black
 let s:fg = s:white
 
-" Accent colors for GitGutter, errors, etc.
+" Accent colors for vim diff, errors, etc.
 if s:ascetic_accent_colors
-  let s:accent_blue   = { "gui": "#2980b9", "cterm": "27" }
-  let s:accent_red    = { "gui": "#F43753", "cterm": "196" }
-  let s:accent_green  = { "gui": "#5AF78D", "cterm": "82" }
-  let s:accent_orange = { "gui": "#FFC24B", "cterm": "136" }
+  let s:accent_blue   = { "gui": "#8AADF4", "cterm": "27" }
+  let s:accent_red    = { "gui": "#ED8796", "cterm": "196" }
+  let s:accent_green  = { "gui": "#A6DA95", "cterm": "82" }
+  let s:accent_orange = { "gui": "#EED49F", "cterm": "136" }
 else
   let s:accent_blue   = s:fg
   let s:accent_red    = s:fg
@@ -88,11 +88,6 @@ hi! link CursorLineNr   ColorColumn
 
 hi! link Directory    Normal
 
-call s:h("DiffText",  {"gui": "reverse", "cterm": "reverse"})
-call s:h("DiffAdd",   {"bg": s:white})
-hi! link DiffChange   DiffAdd
-hi! link DiffDelete   DiffAdd
-
 call s:h("WarningMsg", {"fg": s:fg})
 call s:h("ErrorMsg",   {"fg": s:fg, "gui": "reverse", "cterm": "reverse"})
 call s:h("VertSplit",  {"fg": s:black, "bg": s:black})
@@ -140,19 +135,21 @@ call s:h("IncSearch",  {"fg": s:black, "bg": s:actual_white})
 call s:h("Error", {"fg": s:accent_red})
 call s:h("Todo",  {"fg": s:medium_gray, "gui": "bold,italic", "cterm": "bold,italic"})
 
+" Floating windows
+call s:h("NormalFloat", {"fg": s:fg, "bg": s:bg})
+call s:h("FloatBorder", {"fg": s:dark_gray})
+
+" Vim diff
+call s:h("DiffAdd",     {"fg": s:accent_green})
+call s:h("DiffChange",  {"fg": s:accent_orange})
+call s:h("DiffDelete",  {"fg": s:accent_red})
+call s:h("DiffText",    {"fg": s:accent_blue})
+
+" Fugitive
 hi! link FugitiveblameHash             Normal
 hi! link FugitiveblameUncommitted      FugitiveblameHash
 hi! link FugitiveblameTime             FugitiveblameHash
 hi! link FugitiveblameNotCommittedYet  FugitiveblameHash
-
-call s:h("GitGutterAdd",         {"fg": s:accent_green})
-call s:h("GitGutterChange",      {"fg": s:accent_orange})
-call s:h("GitGutterDelete",      {"fg": s:accent_red})
-hi! link GitGutterChangeDelete   GitGutterDelete
-
-" Floating windows
-call s:h("NormalFloat", {"fg": s:fg, "bg": s:bg})
-call s:h("FloatBorder", {"fg": s:dark_gray})
 
 " Telescope
 call s:h("TelescopeSelection", {"bg": s:darkest_gray, "gui": "bold"})
