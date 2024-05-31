@@ -1,10 +1,20 @@
 ## vim-ascetic
 
-I wanted a monochrome dark (n)vim colorscheme that used a transparent
+I wanted a monochrome (n)vim colorscheme that used a transparent
 background with softer tones. Too many of them used bolds and bright whites
 excessively. Apparently that's not a thing, so I made this.
 
+This also supports light background. Use the background option to set light vs. dark:
+```vim
+set background=dark
+```
+> Note: The background will default to transparent, this can make the colorscheme not work if your default background is dark, but you set the colorscheme to light without setting `g:ascetic_transparent_bg=0`.
+
+### Dark background
 ![screenshot](./img/screenshot.png)
+
+### Light background
+![screenshot-light](./img/screenshot-light.png)
 
 ### Options
 

@@ -1,10 +1,9 @@
 " Name:         ascetic
-" Description:  Dark monochrome low-contrast colorscheme
+" Description:  Monochrome low-contrast colorscheme
 " Author:       Aos Dabbagh <hello@aos.sh>
 " Maintainer:   Aos Dabbagh <hello@aos.sh>
 " License:      MIT License (MIT)
 
-set background=dark
 hi clear
 
 if exists('syntax on')
@@ -13,20 +12,50 @@ endif
 
 let g:colors_name = 'ascetic'
 
+let s:is_dark = (&background == 'dark')
+
 " Transparency and accent colors are on by default
 let s:ascetic_transparent_bg = get(g:, 'ascetic_transparent_bg', 1)
 let s:ascetic_accent_colors  = get(g:, 'ascetic_accent_colors',  1)
 
-let s:blackest      = { "gui": "#D1D1D1", "cterm": "0" }
-let s:black         = { "gui": "#212121", "cterm": "0" }
-let s:darkest_gray  = { "gui": "#323232", "cterm": "236" }
-let s:darker_gray   = { "gui": "#414141", "cterm": "8"   }
-let s:dark_gray     = { "gui": "#767676", "cterm": "242" }
-let s:medium_gray   = { "gui": "#999999", "cterm": "243" }
-let s:light_gray    = { "gui": "#B2B2B2", "cterm": "249" }
-let s:white         = { "gui": "#C0C0C0", "cterm": "81" }
-let s:lighter_white = { "gui": "#F1F1F1", "cterm": "15"  }
-let s:actual_white  = { "gui": "#FFFFFF", "cterm": "231" }
+" Init color palette
+let s:col = {}
+
+" Colors
+let s:col.blackest      = { "gui": "#D1D1D1", "cterm": "0" }
+let s:col.black         = { "gui": "#212121", "cterm": "0" }
+let s:col.darkest_gray  = { "gui": "#323232", "cterm": "236" }
+let s:col.darker_gray   = { "gui": "#414141", "cterm": "8"   }
+let s:col.dark_gray     = { "gui": "#767676", "cterm": "242" }
+let s:col.medium_gray   = { "gui": "#999999", "cterm": "243" }
+let s:col.light_gray    = { "gui": "#B2B2B2", "cterm": "249" }
+let s:col.white         = { "gui": "#C0C0C0", "cterm": "81" }
+let s:col.lighter_white = { "gui": "#F1F1F1", "cterm": "15"  }
+let s:col.actual_white  = { "gui": "#FFFFFF", "cterm": "231" }
+
+if s:is_dark
+  let s:blackest      = s:col.blackest
+  let s:black         = s:col.black
+  let s:darkest_gray  = s:col.darkest_gray
+  let s:darker_gray   = s:col.darker_gray
+  let s:dark_gray     = s:col.dark_gray
+  let s:medium_gray   = s:col.medium_gray
+  let s:light_gray    = s:col.light_gray
+  let s:white         = s:col.white
+  let s:lighter_white = s:col.lighter_white
+  let s:actual_white  = s:col.actual_white
+else
+  let s:blackest      = s:col.actual_white
+  let s:black         = s:col.white
+  let s:darkest_gray  = s:col.light_gray
+  let s:darker_gray   = s:col.medium_gray
+  let s:dark_gray     = s:col.dark_gray
+  let s:medium_gray   = s:col.darker_gray
+  let s:light_gray    = s:col.darkest_gray
+  let s:white         = s:col.black
+  let s:lighter_white = s:col.blackest
+  let s:actual_white  = s:col.blackest
+endif
 
 let s:bg = s:black
 let s:fg = s:white
@@ -106,7 +135,8 @@ call s:h("PmenuSel",   {"fg": s:fg, "bg": s:darker_gray})
 call s:h("PmenuSbar",  {"fg": s:fg, "bg": s:bg})
 call s:h("PmenuThumb", {"fg": s:fg, "bg": s:bg})
 
-call s:h("Search", {"fg": s:actual_white, "gui": "underline,bold", "cterm": "underline,bold"})
+call s:h("Search",    {"gui": "underline,bold", "cterm": "underline,bold"})
+call s:h("IncSearch", {"gui": "reverse", "cterm": "reverse"})
 
 call s:h("Question", {"fg": s:fg})
 call s:h("SpecialKey", {"fg": s:darker_gray})
@@ -116,8 +146,8 @@ hi! link SpellLocal  SpellBad
 hi! link SpellCap    SpellBad
 hi! link SpellRare   SpellBad
 
-call s:h("StatusLine",   {"fg": s:darker_gray, "gui": "bold", "cterm": "bold"})
-call s:h("StatusLineNC", {"fg": s:darker_gray})
+call s:h("StatusLine",   {"fg": s:dark_gray})
+call s:h("StatusLineNC", {"fg": s:dark_gray})
 
 call s:h("TabLine",     {"fg": s:medium_gray, "bg": s:darker_gray})
 call s:h("TabLineFill", {"bg": s:darker_gray})
@@ -130,7 +160,6 @@ hi! link VisualNOS  Visual
 call s:h("WildMenu", {"fg": s:fg, "bg": s:bg, "gui": "bold", "cterm": "bold"})
 
 call s:h("Underlined", {"gui": "underline", "cterm": "underline"})
-call s:h("IncSearch",  {"fg": s:black, "bg": s:actual_white})
 
 call s:h("Error", {"fg": s:accent_red})
 call s:h("Todo",  {"fg": s:dark_gray, "gui": "bold,italic", "cterm": "bold,italic"})
