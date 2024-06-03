@@ -33,6 +33,8 @@ let s:col.white         = { "gui": "#C0C0C0", "cterm": "81" }
 let s:col.lighter_white = { "gui": "#F1F1F1", "cterm": "15"  }
 let s:col.actual_white  = { "gui": "#FFFFFF", "cterm": "231" }
 
+let s:none              = { "gui": "NONE",    "cterm": "NONE" }
+
 if s:is_dark
   let s:blackest      = s:col.blackest
   let s:black         = s:col.black
@@ -110,7 +112,7 @@ hi! link PreProc      Constant
 hi! link Type         Constant
 hi! link Special      Constant
 
-call s:h("ColorColumn", {"bg": s:darkest_gray})
+call s:h("ColorColumn", {"fg": s:fg, "bg": s:darkest_gray})
 hi! link CursorColumn   ColorColumn
 hi! link CursorLine     ColorColumn
 hi! link CursorLineNr   ColorColumn
