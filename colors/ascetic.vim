@@ -112,7 +112,7 @@ hi! link PreProc      Constant
 hi! link Type         Constant
 hi! link Special      Constant
 
-call s:h("ColorColumn", {"fg": s:fg, "bg": s:darkest_gray})
+call s:h("ColorColumn", {"bg": s:darkest_gray})
 hi! link CursorColumn   ColorColumn
 hi! link CursorLine     ColorColumn
 hi! link CursorLineNr   ColorColumn
@@ -129,7 +129,7 @@ hi! link FoldColumn Folded
 call s:h("SignColumn", {"fg": s:medium_gray, "bg": s:black})
 
 call s:h("LineNr",     {"fg": s:dark_gray})
-call s:h("MatchParen", {"fg": s:accent_blue, "gui": "underline", "cterm": "underline"})
+call s:h("MatchParen", {"fg": s:accent_green, "gui": "underline", "cterm": "underline"})
 call s:h("NonText",    {"fg": s:darker_gray})
 
 call s:h("Pmenu",      {"fg": s:fg, "bg": s:bg})
