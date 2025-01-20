@@ -64,10 +64,10 @@ let s:fg = s:white
 
 " Accent colors for vim diff, errors, etc.
 if s:ascetic_accent_colors
-  let s:accent_blue   = { "gui": "#8AADF4", "cterm": "27" }
-  let s:accent_red    = { "gui": "#ED8796", "cterm": "196" }
-  let s:accent_green  = { "gui": "#A6DA95", "cterm": "82" }
-  let s:accent_orange = { "gui": "#EED49F", "cterm": "136" }
+  let s:accent_blue   = { "gui": "#9900FF", "cterm": "27" }
+  let s:accent_red    = { "gui": "#FC5800", "cterm": "196" }
+  let s:accent_green  = { "gui": "#00B5B5", "cterm": "82" }
+  let s:accent_orange = { "gui": "#BE721B", "cterm": "136" }
 else
   let s:accent_blue   = s:actual_white
   let s:accent_red    = s:dark_gray
