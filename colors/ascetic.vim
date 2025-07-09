@@ -15,8 +15,9 @@ let g:colors_name = 'ascetic'
 let s:is_dark = (&background == 'dark')
 
 " Transparency and accent colors are on by default
-let s:ascetic_transparent_bg = get(g:, 'ascetic_transparent_bg', 1)
-let s:ascetic_accent_colors  = get(g:, 'ascetic_accent_colors',  1)
+let s:ascetic_transparent_bg    = get(g:, 'ascetic_transparent_bg',    1)
+let s:ascetic_accent_colors     = get(g:, 'ascetic_accent_colors',     1)
+let s:ascetic_highlight_strings = get(g:, 'ascetic_highlight_strings', 0)
 
 " Init color palette
 let s:col = {}
@@ -98,7 +99,6 @@ call s:h("Cursor",  {"fg": s:bg, "bg": s:fg})
 
 hi! link Constant     Normal
 hi! link Character    Constant
-hi! link String       Constant
 hi! link Boolean      Constant
 hi! link Number       Constant
 hi! link Float        Constant
@@ -111,6 +111,12 @@ hi! link Exception    Constant
 hi! link PreProc      Constant
 hi! link Type         Constant
 hi! link Special      Constant
+
+if s:ascetic_highlight_strings
+  call s:h("String",  {"fg": s:col.medium_gray})
+else
+  hi! link String     Constant
+endif
 
 call s:h("ColorColumn", {"bg": s:darkest_gray})
 hi! link CursorColumn   ColorColumn
