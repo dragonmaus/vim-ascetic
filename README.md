@@ -28,3 +28,8 @@ parenthesis, diffs, errors, and warnings. Turn this off with:
 ```vim
 let g:ascetic_accent_colors = 0
 ```
+
+- **String highlighting** is disabled by default, you can turn this on with:
+```vim
+let g:ascetic_highlight_strings = 1
+```
